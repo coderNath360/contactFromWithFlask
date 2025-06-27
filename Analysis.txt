@@ -1,0 +1,49 @@
+This project creates a contact form using HTML, CSS, and Flask
+
+Needs:
+Install the flask library in your folder with: pip install flask
+Install the flask-mail library with: pip install flask_mail
+
+install the dotenv to create and control your project environment with: pip install dotenv
+install the os environment to control you environment_variables like the FLASK_SECRET_KEY: pip install os
+
+Get an app_passwork_key with your gmail account or the client's mail account, as follows:
+- On you google browser, search "googleaccounts"
+- Click the first link, and login
+- Click on the "Security" button, then turn on the 2-step verification
+ -using the search bar, type "app passwrods" and click the third option then enter you gmail password againi to grant a login access
+ - create an app name which may also be your project name e.g. (Contact form) and click create
+ - copy the 16-characters displayed on the prompt dialogue
+ that is your app_passwork_key and keep your mail loged in
+Paste the copied key into your ".env" file to the "MAIL_PASSWORD" variable removing the spaces between each 4-characters
+
+Run your app.py in the terminal by typing: python app.py
+scroll down and follow the localHost link (http://127.0.0.1:5000) to your web browser
+
+enter a set of details and send your mail, the RECEIVER_EMAIL mail will receive an email with the details in a few seconds
+
+
+The .env contents
+FLASK_SECRET_KEY=just randon characters of your choice as a developer e.g.(sjvhdoisknjij232hijkzbvjdij8jmjfd8bnbnbjk0)
+MAIL_USERNAME=client'sMail@gmail.com
+MAIL_PASSWORD=your generated app_passwork_key
+RECEIVER_EMAIL=client'sWebsitemail@gmail.com
+
+
+The Profile folder contains the Procfile file:
+Here’s what each part means:
+
+- web: tells the platform (like Heroku) to run this as a web process.
+
+- gunicorn: is a Python WSGI HTTP server used in production (you need to add it to requirements.txt).
+
+- app:app means:
+
+the file is app.py and inside it, your Flask instance is named app.
+
+You can edit the form display as you want e.g. HTML, CSS
+
+Don't worry about the .gitignore file, it only bypasses the git refferences
+
+                                                                                By:
+                                                                                Emiola Nathaniel A. (+234 7044516019)
