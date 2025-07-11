@@ -29,31 +29,34 @@ def contact():
         email = request.form.get('email')
         message = request.form.get('message')
 
-        # Compose and send email
-        msg = Message(subject='Contact Form Submission',
-                      sender=(app.config['MAIL_USERNAME']),
-                      recipients=[receiver_email],
-                      body=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}")
-        # mail.send(msg)
+        first_name = name.split()[0] if name else "Guest"
+
+        # Compose main message
+        msg = Message(
+            subject='Aloime3 Contacts',
+            sender=('Aloime3', app.config['MAIL_USERNAME']),
+            recipients=[receiver_email],
+            body=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+        )
+
         try:
             mail.send(msg)
-            first_name = name.split()[0] if name else "Guest"
+
+            # Send confirmation only if main email was successful
+            confirmation = Message(
+                subject="Thanks for contacting us!",
+                sender=('Aloime3', app.config['MAIL_USERNAME']),
+                recipients=[email],
+                body=f"Hi {first_name},\n\nThanks for reaching out. We'll respond soon!"
+            )
+            mail.send(confirmation)
+
             return render_template('thank_you.html', name=first_name)
 
         except Exception as e:
             print("Mail send error:", str(e))
             flash('Failed to send email. Please try again later.', 'error')
-
-        confirmation = Message(
-            subject="Thanks for contacting us!",
-            sender= (app.config['MAIL_USERNAME']),
-            recipients=[email],  # the sender's email from the form
-            body=f"Hi {name},\n\nThanks for reaching out. We'll respond soon!"
-        )
-        mail.send(confirmation)
-        
-        # flash('Your message has been sent successfully!', 'success')
-        return redirect('/')
+            return redirect('/')
 
     return render_template('contact.html')
 
