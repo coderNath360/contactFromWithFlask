@@ -1,96 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Contact Form</title>
+  <meta charset="UTF-8">
+  <title>Contact Us</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
 
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f2f4f8;
-            padding: 50px;
-            text-align: center;
-        }
+    body {
+      display: flex;
+      flex-direction: column;
+      background-color: #f8f9fa;
+    }
 
-        .contact-container {
-            background-color: white;
-            padding: 40px;
-            max-width: 500px;
-            margin: 0 auto;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
+    .main-content {
+      margin-top: 10em;
+      flex: 1 0 auto;
+      padding: 50px 15px;
+      text-align: center;
+    }
 
-        h1 {
-            color: #2c7be5;
-            margin-bottom: 20px;
-        }
+    .main-content h1{
+      font-size: 5em;
+    }
 
-        input, textarea {
-            width: 100%;
-            padding: 12px 15px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
+    footer {
+      flex-shrink: 0;
+      background-color: #212529;
+      color: white;
+      padding: 10px 0;
+      font-size: 0.85rem;
+    }
 
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
+    footer a {
+      color: white;
+      text-decoration: none;
+    }
 
-        button {
-            background-color: #2c7be5;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #1a5fcc;
-        }
-
-        .message {
-            margin-top: 20px;
-            color: green;
-        }
-
-        .error {
-            color: red;
-        }
-    </style>
-    
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <h1>Contact Us</h1>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul>
-                {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+  <div class="main-content">
+    <h1 class="mb-3">Welcome to SWD PythonG2</h1>
+    <p class="mb-4">Click the button below to contact us.</p>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal">
+      Contact Us
+    </button>
+  </div>
 
-    <form method="POST">
-        <label>Name:</label><br>
-        <input type="text" name="name" required><br><br>
+  <!-- Contact Modal -->
+  <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="POST" class="modal-content" id="contactForm" onsubmit="showSpinner()">
+        <div class="modal-header">
+          <h5 class="modal-title">Send a Message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+          </div>
+          <div class="mb-3">
+            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" name="message" placeholder="Your Message" rows="4" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="submitBtn" class="btn btn-success">
+            <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+            <span id="btnText">Send</span>
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br><br>
+  <!-- Footer -->
+  <footer>
+    <div class="container text-center">
+      <p class="mb-1">&copy; 2025 SWD PythonG2. All rights reserved.</p>
+      <p class="mb-2">
+        <a href="mailto:info@aloime3.com">infoSWDpythonG3@gmail.com</a> |
+        <a href="tel:+2341234567890">+234 123 456 7890</a>
+      </p>
+      <div>
+        <a href="#" class="me-3"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="me-3"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="me-3"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </footer>
 
-        <label>Message:</label><br>
-        <textarea name="message" required></textarea><br><br>
-
-        <button type="submit">Send</button>
-    </form>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function showSpinner() {
+      document.getElementById("spinner").classList.remove("d-none");
+      document.getElementById("btnText").textContent = "Sending...";
+      document.getElementById("submitBtn").disabled = true;
+    }
+  </script>
 </body>
 </html>
